@@ -3,11 +3,15 @@
 - Why do we use signals ?
     
     To automatically create a user’s profile as soon as a new user is signed into the database. Without using signals, we’ve to manually create a user’s profile in the Django admin panel.
+    ![Profile 1 (1)](https://user-images.githubusercontent.com/95970467/215292893-d52d4bb8-48b0-42b3-ad32-e8aa657d8180.png)
+
    
     
 - Why is M2M field used to create the follower’s and following’s list, not O2M?
     
     Because a user profile can follow multiple profiles and can be followed by multiple user profiles simultaneously.
+    ![Profile 1](https://user-images.githubusercontent.com/95970467/215292870-b883eca5-8d5b-4a3a-8103-5eb2040e3b44.png)
+
     
     
 - What is self as an argument in the following instance while defining M2M relationship?
