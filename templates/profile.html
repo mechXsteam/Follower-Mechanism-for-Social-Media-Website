@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ fetch_profile.owner.username }}'s profile page</title>
+</head>
+<body>
+    <h2><a href="{% url 'my_app:home_view' %}">Home</a></h2>
+    <h1>{{ fetch_profile.owner.username }}</h1>
+    <p>followers : {{ followers }} following : {{ following }}</p>
+    <h2>followed by :</h2>
+    <ul>
+        {% for followers in fetch_profile.followed_by.all %}
+            {# removing self profile from the follower's list #}
+            {% if followers == fetch_profile %}
+                {{ continue }}
+            {% else %}
+                <li>{{ followers }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <h2>following :</h2>
+    <ul>
+        {% for following in fetch_profile.following.all %}
+            {# removing self profile from the following's list #}
+            {% if following == fetch_profile %}
+                {{ continue }}
+            {% else %}
+                <li>{{ following }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <form action="{% url 'my_app:profile_view' fetch_profile.id %}" method="post">
+        {% csrf_token %}
+        {% if user_profile in fetch_profile.followed_by.all and user_profile != fetch_profile %}
+            {# the 'and' statement is written to hide follow and unfollow buttons from my own profile #}
+            <button name="follow_unfollow" value="unfollow">Unfollow</button>
+        {% elif user_profile not in fetch_profile.followed_by.all and user_profile != fetch_profile %}
+            <button name="follow_unfollow" value="follow">Follow</button>
+        {% endif %}
+    </form>
+</body>
+</html>

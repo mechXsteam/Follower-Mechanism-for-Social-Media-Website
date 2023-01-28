@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All profile's list</title>
+</head>
+<body>
+<h1>Profile's list</h1>
+<h2><a href="{% url 'my_app:profile_view' request.user.id %}">My Profile</a></h2>
+<ul>
+    {% for ele in profile_list %}
+        {# we removed our profile from the profile list. As the list is meant for new profiles to be followed  #}
+        {% if ele.owner == request.user %}
+            {{ continue }}
+        {% else %}
+            <li><a href="{% url 'my_app:profile_view' ele.id %}">{{ ele }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+<br>
+</body>
+</html>
